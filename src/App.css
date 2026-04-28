@@ -1,0 +1,373 @@
+/* ===== App Container ===== */
+#root {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Header / Title ===== */
+.app-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+/* ===== Todo Input Section ===== */
+.todo-input {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.todo-input:focus-within {
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(99, 102, 241, 0.25);
+  transform: translateY(-2px);
+}
+
+.todo-input input[type="text"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  min-width: 0;
+}
+
+.todo-input input[type="text"]::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.todo-input input[type="time"] {
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.5);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.todo-input input[type="time"]:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.todo-input input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.4);
+  cursor: pointer;
+}
+
+.todo-input button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0.6rem 1.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.todo-input button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.todo-input button:active {
+  transform: scale(0.98);
+}
+
+/* ===== Todo List Container ===== */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ===== Section Headers ===== */
+.active-section h3,
+.completed-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.active-section h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--primary), var(--accent));
+  border-radius: 2px;
+}
+
+.completed-section h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--success), var(--success-light));
+  border-radius: 2px;
+}
+
+/* Empty state text */
+.active-section > p,
+.completed-section > p {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px dashed var(--card-border);
+  border-radius: var(--radius-lg);
+  font-style: italic;
+}
+
+/* ===== Task Cards ===== */
+.task-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  animation: slideIn 0.35s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.task-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.task-card strong {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.task-card span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(6, 182, 212, 0.1);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Completed task styling */
+.task-card.completed {
+  opacity: 0.85;
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.15);
+}
+
+.task-card.completed strong {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+/* ===== Action Buttons ===== */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.actions button,
+.task-card.completed button {
+  padding: 0.45rem 1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  white-space: nowrap;
+}
+
+/* Complete button */
+.actions button:first-child {
+  background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+  color: white;
+}
+
+.actions button:first-child:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+
+/* Delete button */
+.actions button:last-child,
+.task-card.completed button {
+  background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+  color: white;
+}
+
+.actions button:last-child:hover,
+.task-card.completed button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.actions button:active,
+.task-card.completed button:active {
+  transform: scale(0.95);
+}
+
+/* ===== Floating particles background effect (optional decoration) ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.08) 0%, transparent 25%),
+    radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 25%);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 640px) {
+  #root {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .app-title {
+    font-size: 2rem;
+  }
+
+  .todo-input {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .todo-input input[type="text"] {
+    width: 100%;
+    order: 1;
+  }
+
+  .todo-input input[type="time"] {
+    flex: 1;
+    order: 2;
+  }
+
+  .todo-input button {
+    flex: 1;
+    order: 3;
+  }
+
+  .task-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .task-card.completed {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .task-card.completed button {
+    flex-shrink: 0;
+  }
+}
+
+/* ===== Task count badge (if we add it later) ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 11px;
+  background: var(--primary);
+  color: white;
+  margin-left: 0.5rem;
+}
+
